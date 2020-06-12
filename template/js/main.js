@@ -6,369 +6,270 @@
  * Version: v1.1.0
  * License: Themeforest Standard Licenses: https://themeforest.net/licenses
  */
-
-/*----------- Table of Contents -----------*/
-
-/**
- * Globals
- * Navbar
- * Home
- * Services
- * Testimonials
- * Contact
- * Preloader
- * Portfolio
- */
-
-(function($) {
-  'use strict';
-  $(function() {
-    /*----------- Globals -----------*/
-
-    /* Lity setup */
-    $(document).on('click', '[data-lightbox]', lity.options('template', '<div class="lity" role="dialog" aria-label="Dialog Window (Press escape to close)" tabindex="-1"><div class="lity-wrap" data-lity-close role="document"><div class="lity-loader" aria-hidden="true">Loading...</div><div class="lity-container"><div class="lity-content"></div><div class="lity-close" data-lity-close aria-label="Close (Press escape to close)"><span class="btn-line"></span></div></div></div></div>'));
-
-    /* Custom function to remove margin bottom from items in the last row depending on the screen size / how many columns the grid has */
-    function responsiveColumns(elements, options, styleClasses) {
-      function sliceElements(elements, value) {
-        var slicedElements = $(elements[0]).slice(-value);
-        if (elements[1] === null) {
-          slicedElements.addClass(styleClasses);
-        } else {
-          slicedElements.find(elements[1]).addClass(styleClasses);
-        }
+!(function(e) {
+  'use strict'
+  e(function() {
+    function a(a, t, i) {
+      function s(a, t) {
+        var s = e(a[0]).slice(-t)
+        null === a[1] ? s.addClass(i) : s.find(a[1]).addClass(i)
       }
-      $.each(options, function(index, value) {
-        var columns = value.columns;
-        if (window.matchMedia(value.matchMedia).matches) {
-          var remainder = $(elements[0]).length % columns;
-          if (remainder === 0) {
-            sliceElements(elements, columns);
-          } else {
-            sliceElements(elements, remainder);
-          }
-          return false;
+      e.each(t, function(t, i) {
+        var o = i.columns
+        if (window.matchMedia(i.matchMedia).matches) {
+          var n = e(a[0]).length % o
+          return s(a, 0 === n ? o : n), !1
         }
-      });
+      })
     }
-
-    /*----------- Navbar -----------*/
-
-    /* Lightboxes setup */
-    $('.navbar .navbar-nav .nav-link[href^="#"]').each(function() {
-      $(this).animatedModal({
-        animatedIn: 'fadeIn',
-        animatedOut: 'fadeOut',
-        animationDuration: '0s',
-        beforeOpen: function() {
-          $('#overlay-effect').addClass('animate-up').removeClass('animate-down');
-          $('#' + this.modalTarget).css({
-            'animationDelay': '.5s',
-            'animationFillMode': 'both'
-          });
-        },
-        afterOpen: function() {
-          $('#' + this.modalTarget).css({
-            'animationFillMode': 'none'
-          });
-        },
-        beforeClose: function() {
-          $('#overlay-effect').addClass('animate-down').removeClass('animate-up');
-          $('#' + this.modalTarget).css({
-            'animationDelay': '.5s',
-            'animationFillMode': 'both'
-          });
-        },
-        afterClose: function() {
-          $('#' + this.modalTarget).css({
-            'animationFillMode': 'none'
-          });
-        }
-      });
-    });
-
-    $('.lightbox-wrapper').each(function() {
-      if (!$('.navbar .navbar-nav .nav-link[href^="#' + this.id + '"]').length) {
-        $(this).hide();
-      }
-    });
-
-    /* Hides the the mobile navbar dropdown when the user clicks outside of it */
-    $(document).on('mouseup', function(event) {
-      if ($('.navbar #navbarSupportedContent').hasClass('show')) {
-        // The mobile Bootstrap navbar dropdown
-        var navbarToggler = $('.navbar .navbar-menu');
-        if (!navbarToggler.is(event.target) && navbarToggler.has(event.target).length === 0) {
-          navbarToggler.trigger('click');
-        }
-      }
-    });
-
-    /*----------- Home -----------*/
-
-    /* Animated heading text */
-    (function() {
-      // Set animation timing
-      var animationDelay = 2500,
-        // Clip effect
-        revealDuration = 660,
-        revealAnimationDelay = 1500;
-
-      initHeadline();
-
-      function initHeadline() {
-        // Initialise headline animation
-        animateHeadline($('.cd-headline'));
-      }
-
-      function animateHeadline($headlines) {
-        var duration = animationDelay;
-        $headlines.each(function() {
-          var headline = $(this);
-          if (headline.hasClass('clip')) {
-            var spanWrapper = headline.find('.cd-words-wrapper'),
-              newWidth = spanWrapper.width() + 10;
-            spanWrapper.css('width', newWidth);
+    e(document).on(
+      'click',
+      '[data-lightbox]',
+      lity.options(
+        'template',
+        '<div class="lity" role="dialog" aria-label="Dialog Window (Press escape to close)" tabindex="-1"><div class="lity-wrap" data-lity-close role="document"><div class="lity-loader" aria-hidden="true">Loading...</div><div class="lity-container"><div class="lity-content"></div><div class="lity-close" data-lity-close aria-label="Close (Press escape to close)"><span class="btn-line"></span></div></div></div></div>'
+      )
+    ),
+      e('.navbar .navbar-nav .nav-link[href^="#"]').each(function() {
+        e(this).animatedModal({
+          animatedIn: 'fadeIn',
+          animatedOut: 'fadeOut',
+          animationDuration: '0s',
+          beforeOpen: function() {
+            e('#overlay-effect')
+              .addClass('animate-up')
+              .removeClass('animate-down'),
+              e('#' + this.modalTarget).css({
+                animationDelay: '.5s',
+                animationFillMode: 'both'
+              })
+          },
+          afterOpen: function() {
+            e('#' + this.modalTarget).css({ animationFillMode: 'none' })
+          },
+          beforeClose: function() {
+            e('#overlay-effect')
+              .addClass('animate-down')
+              .removeClass('animate-up'),
+              e('#' + this.modalTarget).css({
+                animationDelay: '.5s',
+                animationFillMode: 'both'
+              })
+          },
+          afterClose: function() {
+            e('#' + this.modalTarget).css({ animationFillMode: 'none' })
           }
-
-          //trigger animation
-          setTimeout(function() {
-            hideWord(headline.find('.is-visible').eq(0));
-          }, duration);
-        });
-      }
-
-      function hideWord($word) {
-        var nextWord = takeNext($word);
-
-        if ($word.parents('.cd-headline').hasClass('clip')) {
-          $word.parents('.cd-words-wrapper').animate({
-            width: '2px'
-          }, revealDuration, function() {
-            switchWord($word, nextWord);
-            showWord(nextWord);
-          });
-
+        })
+      }),
+      e('.lightbox-wrapper').each(function() {
+        e('.navbar .navbar-nav .nav-link[href^="#' + this.id + '"]').length ||
+          e(this).hide()
+      }),
+      e(document).on('mouseup', function(a) {
+        if (e('.navbar #navbarSupportedContent').hasClass('show')) {
+          var t = e('.navbar .navbar-menu')
+          t.is(a.target) || 0 !== t.has(a.target).length || t.trigger('click')
         }
-      }
-
-      function showWord($word, $duration) {
-        if ($word.parents('.cd-headline').hasClass('clip')) {
-          $word.parents('.cd-words-wrapper').animate({
-            'width': $word.width() + 10
-          }, revealDuration, function() {
+      }),
+      (function() {
+        var a,
+          t,
+          i = 2500,
+          s = 660,
+          o = 1500
+        function n(e) {
+          var a = (function(e) {
+            return e.is(':last-child')
+              ? e
+                  .parent()
+                  .children()
+                  .eq(0)
+              : e.next()
+          })(e)
+          e.parents('.cd-headline').hasClass('clip') &&
+            e
+              .parents('.cd-words-wrapper')
+              .animate({ width: '2px' }, s, function() {
+                var t
+                ;(t = a),
+                  e.removeClass('is-visible').addClass('is-hidden'),
+                  t.removeClass('is-hidden').addClass('is-visible'),
+                  (function(e, a) {
+                    e.parents('.cd-headline').hasClass('clip') &&
+                      e
+                        .parents('.cd-words-wrapper')
+                        .animate({ width: e.width() + 10 }, s, function() {
+                          setTimeout(function() {
+                            n(e)
+                          }, o)
+                        })
+                  })(a)
+              })
+        }
+        ;(a = e('.cd-headline')),
+          (t = i),
+          a.each(function() {
+            var a = e(this)
+            if (a.hasClass('clip')) {
+              var i = a.find('.cd-words-wrapper'),
+                s = i.width() + 10
+              i.css('width', s)
+            }
             setTimeout(function() {
-              hideWord($word);
-            }, revealAnimationDelay);
-          });
-        }
-      }
-
-
-      function takeNext($word) {
-        return (!$word.is(':last-child')) ? $word.next() : $word.parent().children().eq(0);
-      }
-
-      function takePrev($word) {
-        return (!$word.is(':first-child')) ? $word.prev() : $word.parent().children().last();
-      }
-
-      function switchWord($oldWord, $newWord) {
-        $oldWord.removeClass('is-visible').addClass('is-hidden');
-        $newWord.removeClass('is-hidden').addClass('is-visible');
-      }
-    }())
-
-    /* Home variants manager */
-
-    // If Video variant
-    if ($('.home-area').hasClass('video-variant')) {
-      $('#homeVideo').YTPlayer();
-    }
-
-    /*----------  About: Services  ----------*/
-
-    /* Removes margin bottom from items in the last row depending on the screen size / how many columns the grid has */
-    responsiveColumns(
-      ['#about .services-section .single-service', null],
-      [{
-          matchMedia: '(max-width: 767.98px)',
-          columns: 1,
-        },
-        {
-          matchMedia: '(max-width: 991.98px)',
-          columns: 2,
-        }, {
-          matchMedia: '(min-width: 991.98px)',
-          columns: 3,
-        }
-      ],
-      'rc-mb-0'
-    );
-
-    /*----------  About: Testimonials  ----------*/
-
-    var testimonials = tns({
+              n(a.find('.is-visible').eq(0))
+            }, t)
+          })
+      })(),
+      e('.home-area').hasClass('video-variant') && e('#homeVideo').YTPlayer(),
+      a(
+        ['#about .services-section .single-service', null],
+        [
+          { matchMedia: '(max-width: 767.98px)', columns: 1 },
+          { matchMedia: '(max-width: 991.98px)', columns: 2 },
+          { matchMedia: '(min-width: 991.98px)', columns: 3 }
+        ],
+        'rc-mb-0'
+      )
+    var t, i, s
+    tns({
       container: '#about .testimonials-section .my-slider',
       items: 2,
       gutter: 30,
-      "responsive": {
-        "0": {
-          "items": 1,
-          "gutter": 0
-        },
-        "768": {
-          "items": 2,
-          "gutter": 30
-        }
-      },
+      responsive: { 0: { items: 1, gutter: 0 }, 768: { items: 2, gutter: 30 } },
       preventScrollOnTouch: 'auto',
-      slideBy: "page",
-      mouseDrag: true,
-      swipeAngle: false,
+      slideBy: 'page',
+      mouseDrag: !0,
+      swipeAngle: !1,
       speed: 400,
-      controls: false,
-      autoHeight: true,
+      controls: !1,
+      autoHeight: !0,
       navPosition: 'bottom'
-    });
-
-    /*----------  About: Pricing  ----------*/
-
-    /* Removes margin bottom from items in the last row depending on the screen size / how many columns the grid has */
-    responsiveColumns(
+    })
+    a(
       ['#about .pricing-section .single-plan', null],
-      [{
-        matchMedia: '(max-width: 991.98px)',
-        columns: 1,
-      }, {
-        matchMedia: '(min-width: 991.98px)',
-        columns: 3,
-      }],
+      [
+        { matchMedia: '(max-width: 991.98px)', columns: 1 },
+        { matchMedia: '(min-width: 991.98px)', columns: 3 }
+      ],
       'rc-mb-0'
-    );
-
-    /*----------  Resume: Skills  ----------*/
-
-    (function() {
-      var initPercentageElement = function() {
-        $('#resume .skills-section .single-skill').each(function() {
-          var percentage = Math.min(100, Math.max(0, $(this).data('percentage')));
-          var barWidth = $(this).find('.skill-progress').outerWidth(true);
-          var percentageElementOffset = barWidth - (barWidth * (percentage / 100));
-          $(this).find('.skill-percentage').text(percentage + '%').css('margin-right', percentageElementOffset);
-          $(this).find('.progress-bar').attr('aria-valuenow', percentage).css('width', percentage + '%');
-        });
-      }
-      initPercentageElement();
-      $(window).on('resize', function() {
-        initPercentageElement();
-      });
-    }());
-
-    /*----------  Portfolio: Portfolio  ----------*/
-
-    (function() {
-      /* Setup Isotope */
-      var grid = $('#portfolio .portfolio-section .portfolio-grid');
-      var filters = $('#portfolio .portfolio-section .filter-control li');
-      grid.imagesLoaded(function() {
-        grid.isotope({
+    ),
+      (t = function() {
+        e('#resume .skills-section .single-skill').each(function() {
+          var a = Math.min(100, Math.max(0, e(this).data('percentage'))),
+            t = e(this)
+              .find('.skill-progress')
+              .outerWidth(!0),
+            i = t - t * (a / 100)
+          e(this)
+            .find('.skill-percentage')
+            .text(a + '%')
+            .css('margin-right', i),
+            e(this)
+              .find('.progress-bar')
+              .attr('aria-valuenow', a)
+              .css('width', a + '%')
+        })
+      })(),
+      e(window).on('resize', function() {
+        t()
+      }),
+      (i = e('#portfolio .portfolio-section .portfolio-grid')),
+      (s = e('#portfolio .portfolio-section .filter-control li')),
+      i.imagesLoaded(function() {
+        i.isotope({
           itemSelector: '#portfolio .portfolio-section .single-item',
-          masonry: {
-            horizontalOrder: true
-          }
-        });
-        filters.on('click', function() {
-          filters.removeClass('tab-active');
-          $(this).addClass('tab-active');
-          var selector = $(this).data('filter');
-          grid.isotope({
-            filter: selector,
-            transitionDuration: '.25s'
-          });
-        });
-      });
-    }());
-
-    /* Removes margin bottom from items in the last row depending on the screen size / how many columns the grid has */
-    responsiveColumns(
-      ['#portfolio .portfolio-section .single-item .portfolio-item', '.portfolio-wrapper'],
-      [{
-        matchMedia: '(max-width: 991.98px)',
-        columns: 2,
-      }, {
-        matchMedia: '(min-width: 991.98px)',
-        columns: 3,
-      }],
-      'rc-mb-0'
-    );
-
-    /*----------  Blog: Blog  ----------*/
-
-    /* Removes margin bottom from items in the last row depending on the screen size / how many columns the grid has */
-    responsiveColumns(
-      ['#blog .blog-section .single-post', null],
-      [{
-        matchMedia: '(max-width: 991.98px)',
-        columns: 1,
-      }, {
-        matchMedia: '(min-width: 991.98px)',
-        columns: 3,
-      }],
-      'rc-mb-0'
-    );
-
-    /*----------- Contact: Contact -----------*/
-
-    $('#contact .contact-section .contact-form').on('submit', function(event) {
-      var form = $(this);
-      var submitBtn = form.find('#contact-submit');
-      var submitBtnText = submitBtn.text();
-      var feedbackEl = form.find('.contact-feedback');
-      event.preventDefault();
-      // Waiting for the response from the server
-      submitBtn.html('Wait...').addClass('wait').prop('disabled', true);
-      setTimeout(function() {
-        // Posts the Form's data to the server using Ajax
-        $.ajax({
-            url: form.attr('action'),
-            type: 'POST',
-            data: form.serialize(),
+          masonry: { horizontalOrder: !0 }
+        }),
+          s.on('click', function() {
+            s.removeClass('tab-active'), e(this).addClass('tab-active')
+            var a = e(this).data('filter')
+            i.isotope({ filter: a, transitionDuration: '.25s' })
           })
-          // Getting a response from the server
-          .done(function(response) {
-            // If the PHP file succeed sending the message
-            if (response == 'success') {
-              // Feedback to the user
-              submitBtn.removeClass('wait').html('Success').addClass('success');
-              feedbackEl.addClass('success').html('Thank you for your message. It has been sent.').fadeIn(200);
-              setTimeout(function() {
-                submitBtn.html(submitBtnText).removeClass('success').prop('disabled', false);
-                feedbackEl.fadeOut(200).removeClass('success').html('');
-              }, 6000);
-              // Clears the Form
-              form[0].reset();
-              // If something is wrong
-            } else {
-              // Feedback to the user
-              console.log(response);
-              submitBtn.removeClass('wait').html('Error').addClass('error');
-              feedbackEl.addClass('error').html('Server error! Please check your browser console log for more details.').fadeIn(200);
-              setTimeout(function() {
-                submitBtn.html(submitBtnText).removeClass('error').prop('disabled', false);
-                feedbackEl.fadeOut(200).removeClass('error').html('');
-              }, 6000);
-            }
-          });
-      }, 1000);
-    });
-
-  });
-  $(window).on('load', function() {
-    /*----------- Preloader -----------*/
-
-    $('.preloader-icon').fadeOut(400);
-    $('.preloader').delay(500).fadeOut('slow');
-
-  });
-}(jQuery));
+      }),
+      a(
+        [
+          '#portfolio .portfolio-section .single-item .portfolio-item',
+          '.portfolio-wrapper'
+        ],
+        [
+          { matchMedia: '(max-width: 991.98px)', columns: 2 },
+          { matchMedia: '(min-width: 991.98px)', columns: 3 }
+        ],
+        'rc-mb-0'
+      ),
+      a(
+        ['#blog .blog-section .single-post', null],
+        [
+          { matchMedia: '(max-width: 991.98px)', columns: 1 },
+          { matchMedia: '(min-width: 991.98px)', columns: 3 }
+        ],
+        'rc-mb-0'
+      ),
+      e('#contact .contact-section .contact-form').on('submit', function(a) {
+        var t = e(this),
+          i = t.find('#contact-submit'),
+          s = i.text(),
+          o = t.find('.contact-feedback')
+        a.preventDefault(),
+          i
+            .html('Wait...')
+            .addClass('wait')
+            .prop('disabled', !0),
+          setTimeout(function() {
+            e.ajax({
+              url: t.attr('action'),
+              type: 'POST',
+              data: t.serialize()
+            }).done(function(e) {
+              'success' == e
+                ? (i
+                    .removeClass('wait')
+                    .html('Success')
+                    .addClass('success'),
+                  o
+                    .addClass('success')
+                    .html('Thank you for your message. It has been sent.')
+                    .fadeIn(200),
+                  setTimeout(function() {
+                    i
+                      .html(s)
+                      .removeClass('success')
+                      .prop('disabled', !1),
+                      o
+                        .fadeOut(200)
+                        .removeClass('success')
+                        .html('')
+                  }, 6e3),
+                  t[0].reset())
+                : (console.log(e),
+                  i
+                    .removeClass('wait')
+                    .html('Error')
+                    .addClass('error'),
+                  o
+                    .addClass('error')
+                    .html(
+                      'Server error! Please check your browser console log for more details.'
+                    )
+                    .fadeIn(200),
+                  setTimeout(function() {
+                    i
+                      .html(s)
+                      .removeClass('error')
+                      .prop('disabled', !1),
+                      o
+                        .fadeOut(200)
+                        .removeClass('error')
+                        .html('')
+                  }, 6e3))
+            })
+          }, 1e3)
+      })
+  }),
+    e(window).on('load', function() {
+      e('.preloader-icon').fadeOut(400),
+        e('.preloader')
+          .delay(500)
+          .fadeOut('slow')
+    })
+})(jQuery)
